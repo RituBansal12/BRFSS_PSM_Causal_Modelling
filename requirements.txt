@@ -1,3 +1,6 @@
 pyreadstat
 pandas
 beautifulsoup4
+re
+html 
+os
