@@ -1,6 +1,18 @@
-pyreadstat
-pandas
-beautifulsoup4
-re
-html 
-os
+# Data processing and analysis
+pandas>=1.5.0
+numpy>=1.21.0
+pyreadstat>=1.1.0
+
+# Data visualization
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Machine learning and statistical analysis
+scikit-learn>=1.1.0
+scipy>=1.9.0
+
+# HTML parsing (for metadata extraction)
+beautifulsoup4>=4.11.0
+
+# Standard library modules (no installation needed)
+# re, html, os, warnings
