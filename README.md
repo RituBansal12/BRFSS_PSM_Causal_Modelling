@@ -202,3 +202,4 @@ matcher.run_full_analysis(caliper=0.2, ratio=1)
 - All results are based on observational data and should be interpreted with appropriate caution
 - The propensity score matching approach helps reduce confounding but cannot eliminate all bias
 - Results may not be generalizable to populations not represented in the BRFSS sample
+- The data/ directory has been removed from the repository. Download the raw files(`LLCP2023.XPT`, `USCODE23_LLCP_021924.HTML`) from https://www.cdc.gov/brfss/annual_data/annual_2023.html and place it under data/ directory to run the code.
