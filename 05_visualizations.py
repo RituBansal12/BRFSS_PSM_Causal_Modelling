@@ -1,0 +1,80 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Data: paste your CSV data here as string, or load from file
+balance_before_csv = pd.read_csv('data/balance_before_matching.csv')
+balance_after_csv = pd.read_csv('data/balance_after_matching.csv')
+
+# Compute absolute SMD for before and after
+balance_before_csv['abs_smd_before'] = balance_before_csv['smd'].abs()
+balance_after_csv['abs_smd_after'] = balance_after_csv['smd'].abs()
+
+# Merge by variable
+df = pd.merge(balance_before_csv[['variable', 'abs_smd_before']],
+              balance_after_csv[['variable', 'abs_smd_after']],
+              on='variable')
+
+# Sort variables by abs_smd_before descending for better visualization order
+df = df.sort_values('abs_smd_before', ascending=False)
+
+# Plot
+plt.figure(figsize=(12, 10))
+sns.set_style('whitegrid')
+
+bar_width = 0.4
+indices = np.arange(len(df))
+
+plt.barh(indices - bar_width/2, df['abs_smd_before'], height=bar_width, color='salmon', label='Before Matching')
+plt.barh(indices + bar_width/2, df['abs_smd_after'], height=bar_width, color='seagreen', label='After Matching')
+
+plt.yticks(indices, df['variable'])
+plt.xlabel('Absolute Standardized Mean Difference (|SMD|)')
+plt.title('Covariate Absolute SMD Improvement Before and After Matching')
+
+plt.legend()
+plt.gca().invert_yaxis()  # Highest imbalance on top
+plt.tight_layout()
+plt.savefig('visualizations/SMD_balance_improvement.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+
+# Calculate overall balance improvement
+overall_before = df['abs_smd_before'].mean()
+overall_after = df['abs_smd_after'].mean()
+improvement = overall_before - overall_after
+
+# Plot overall balance improvement
+plt.figure(figsize=(8, 6))
+plt.bar(['Before Matching', 'After Matching'], [overall_before, overall_after], color=['salmon', 'seagreen'])
+plt.ylabel('Mean Absolute SMD')
+plt.title('Overall Balance Improvement Before and After Matching')
+plt.ylim(0, max(overall_before, overall_after) * 1.1)
+plt.tight_layout()
+plt.savefig('visualizations/overall_balance_improvement.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+# Visualize treatment effect 
+# Values from data/treatment_effect_results.csv
+treated = 0.5083
+control = 0.4457
+effect = 0.0626
+ci_lower = 0.0286
+ci_upper = 0.0966
+
+# X positions for bars
+x = [0, 1]
+outcomes = [control, treated]
+
+plt.figure(figsize=(6,5))
+
+# Plot bars for control and treated
+plt.bar(x, outcomes, color=['salmon', 'seagreen'], width=0.6)
+plt.xticks(x, ['Control Outcome', 'Treated Outcome'])
+
+plt.ylabel('Mental Health Score')
+plt.title('Treatment Effect on Mental Health')
+plt.tight_layout()
+plt.savefig('visualizations/treatment_effect.png', dpi=300, bbox_inches='tight')
+plt.show()

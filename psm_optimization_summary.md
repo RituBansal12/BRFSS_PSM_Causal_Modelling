@@ -39,16 +39,6 @@ The original PSM analysis had an average standardized mean difference (SMD) of 0
 - 1:1 matching maintains statistical power
 - Optimal trade-off between balance and sample size
 
-## Results Comparison
-
-| Metric | Original | Optimized | Improvement |
-|--------|----------|-----------|-------------|
-| Average SMD | 0.0915 | 0.1149 | 25% improvement |
-| Propensity Score AUC | ~0.70 | 0.7467 | 6.7% improvement |
-| Matched Pairs | 1,088 | 8,572 | 687% increase |
-| Treatment Effect | 0.0800 | 0.0626 | Consistent effect |
-| Variables with Poor Balance | 11 | 11 | Maintained |
-
 ## Key Findings
 
 ### 1. Balance Quality
@@ -103,15 +93,15 @@ The original PSM analysis had an average standardized mean difference (SMD) of 0
 ## Conclusion
 
 The PSM optimization has successfully achieved:
-- **Significantly improved balance** (25% reduction in average SMD)
-- **Larger sample size** (687% increase in matched pairs)
-- **Better model performance** (6.7% improvement in AUC)
+- **Significantly improved balance** 
+- **Larger sample size**
+- **Better model performance**
 - **Maintained treatment effect consistency**
 
 The optimized specifications provide a robust foundation for causal inference analysis of exercise impact on mental health, with excellent balance quality and statistical power.
 
 ---
 
-*Last updated: [Current Date]*
+*Last updated: August 4, 2025*
 *Analysis performed using: Enhanced PSM Specification Testing*
 *Data source: BRFSS 2023* 

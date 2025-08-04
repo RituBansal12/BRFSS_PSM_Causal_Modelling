@@ -77,6 +77,22 @@ The analysis follows a systematic approach to causal inference:
   - Analyzes dose-response relationships
   - Examines heterogeneous effects across subgroups
 
+#### `05_visualization.py`
+- **Purpose**: Visualizes the results for blog
+- **Input**: 
+  - `data/balance_before_matching.csv`
+  - `data/balance_after_matching.csv`
+  - `data/treatment_effect_results.csv`
+
+- **Output**:
+  - `visualizations/overall_balance_improvement.png`
+  - `visualizations/SMD_balance_improvement.png`
+  - `visualizations/treatment_effect.png`
+
+
+- **Key Features**:
+  - Creates Visualizations to measure the impact of PSM and specification engineering
+
 ### Data Directory
 
 The `data/` directory contains:
@@ -91,6 +107,9 @@ The `visualizations/` directory contains:
 - `psm_analysis_results.png` - Propensity score matching visualizations
 - `enhanced_psm_specification_comparison.png` - PSM specification testing results
 - `causal_analysis_results.png` - Causal effect analysis plots
+- `visualizations/overall_balance_improvement.png` - Overall balance improvement from optimized PSM specification
+- `visualizations/SMD_balance_improvement.png` - Feature-level SMD improvement from Optimized PSM specifications
+- `visualizations/treatment_effect.png` - Average Treatment Effect
 
 ## Key Variables
 
