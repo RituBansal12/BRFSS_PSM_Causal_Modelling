@@ -1,4 +1,4 @@
-# Counterfactual Modeling: Exercise Impact on Mental Health
+# PSM and Causal Modeling: Exercise Impact on Mental Health
 
 This project analyzes the causal effect of exercise on mental health using the 2023 Behavioral Risk Factor Surveillance System (BRFSS) dataset. The analysis employs propensity score matching and causal inference methods to estimate the treatment effect of exercise participation on mental health outcomes.
 
