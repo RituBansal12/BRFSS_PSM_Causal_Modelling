@@ -67,18 +67,28 @@ The analysis follows a systematic approach to causal inference:
   - Recommends optimal specification based on balance criteria
 
 #### `04_causal_model_fitting.py`
-- **Purpose**: Perform comprehensive causal effect analysis
-- **Input**: `data/best_matched_llcp2023.csv`
+- **Purpose**: Perform comprehensive causal effect analysis using Inverse Probability Weighting (IPW)
+- **Input**: `data/LLCP2023_processed.csv`
 - **Output**:
-  - `data/causal_analysis_dataset.csv` (analysis dataset)
-  - `data/linear_regression_results.csv` (regression results)
-  - `data/dose_response_results.csv` (dose-response analysis)
-  - `data/heterogeneous_effects_results.csv` (subgroup analysis)
+  - `data/causal_analysis_dataset_ipw.csv` (analysis dataset with IPW weights)
+  - `data/ipw_dose_response_results.csv` (IPW dose-response analysis)
+  - `data/ipw_heterogeneous_effects_results.csv` (IPW subgroup analysis)
+  - `visualizations/causal_analysis_results_ipw.png` (comprehensive visualization)
 - **Key Features**:
-  - Creates multiple exercise measures (frequency, intensity, volume)
-  - Performs linear regression analysis
-  - Analyzes dose-response relationships
-  - Examines heterogeneous effects across subgroups
+  - **CausalEffectAnalyzer Class**: Encapsulates entire analysis pipeline
+  - **Exercise Measures**: Creates frequency, intensity, volume, and binary treatment variables
+  - **Propensity Score Calculation**: Uses RandomForestClassifier with optimized parameters
+  - **IPW Analysis**: Applies inverse probability weighting for causal inference
+  - **Dose-Response Analysis**: Examines relationship between exercise minutes and mental health
+  - **Heterogeneous Effects**: Analyzes treatment effects across subgroups (gender, income, baseline mental health)
+  - **Robust Error Handling**: Handles edge cases like zero-sum weights and empty bins
+  - **Optimized Visualization**: Creates multi-panel plots with automatic size adjustment
+- **Recent Improvements** (August 2025):
+  - Fixed structural issues (removed duplicate methods and functions)
+  - Added comprehensive error handling for edge cases
+  - Optimized RandomForest parameters for better performance
+  - Improved visualization handling to prevent matplotlib size errors
+  - Added weighted regression analysis with proper standard errors
 
 #### `05_visualization.py`
 - **Purpose**: Visualizes the results for blog
@@ -86,11 +96,13 @@ The analysis follows a systematic approach to causal inference:
   - `data/balance_before_matching.csv`
   - `data/balance_after_matching.csv`
   - `data/treatment_effect_results.csv`
+  - `data/ipw_dose_response_results.csv`
 
 - **Output**:
   - `visualizations/overall_balance_improvement.png`
   - `visualizations/SMD_balance_improvement.png`
   - `visualizations/treatment_effect.png`
+  - `visualizations/ipw_dose_response.png`
 
 
 - **Key Features**:
@@ -113,6 +125,7 @@ The `visualizations/` directory contains:
 - `visualizations/overall_balance_improvement.png` - Overall balance improvement from optimized PSM specification
 - `visualizations/SMD_balance_improvement.png` - Feature-level SMD improvement from Optimized PSM specifications
 - `visualizations/treatment_effect.png` - Average Treatment Effect
+- `visualizations/ipw_dose_response.png` - IPW Dose-Response Curve
 
 ## Key Variables
 
@@ -169,6 +182,9 @@ python 03_propensity_score_matching.py
 
 # 4. Fit causal models
 python 04_causal_model_fitting.py
+
+# 5. Visualize results
+python 05_visualization.py
 ```
 
 ### Individual Components

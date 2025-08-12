@@ -56,7 +56,6 @@ plt.savefig('visualizations/overall_balance_improvement.png', dpi=300, bbox_inch
 plt.show()
 
 # Visualize treatment effect 
-# Values from data/treatment_effect_results.csv
 treated = 0.5083
 control = 0.4457
 effect = 0.0626
@@ -78,3 +77,33 @@ plt.title('Treatment Effect on Mental Health')
 plt.tight_layout()
 plt.savefig('visualizations/treatment_effect.png', dpi=300, bbox_inches='tight')
 plt.show()
+
+# Visualize IPW dose-response curve
+dose_response = pd.read_csv('data/ipw_dose_response_results.csv')
+
+# For visualization, use mid-point of each exercise bin as the x-axis
+def get_bin_midpoint(bin_str):
+    # Assumes bins like '0.0-59.0'
+    start, end = bin_str.split('-')
+    return (float(start) + float(end)) / 2
+
+dose_response['bin_midpoint'] = dose_response['EXERCISE_MINUTES_BINS'].apply(get_bin_midpoint)
+
+# Filter the data - Between 60 minutes and 540 minutes
+dose_response = dose_response[(dose_response['bin_midpoint'] >= 60) & (dose_response['bin_midpoint'] <= 540)]
+
+# Plot mean with confidence intervals
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.errorbar(dose_response['bin_midpoint'], dose_response['mean'],
+            fmt='o', ecolor='gray', elinewidth=2, capsize=5, color='seagreen')
+
+# Join the points with a line
+ax.plot(dose_response['bin_midpoint'], dose_response['mean'], color='seagreen', linestyle='-', alpha=0.8)
+ax.set_xlabel('Exercise Minutes/week')
+ax.set_ylabel('Average Mental Health Score')
+ax.set_title('Exercise Minutes/week vs. Mental Health Score (Up to 540 minutes)')
+ax.set_xlim([0, 540])
+plt.tight_layout()
+plt.savefig('visualizations/ipw_dose_response.png', dpi=300, bbox_inches='tight')
+plt.show()
+
