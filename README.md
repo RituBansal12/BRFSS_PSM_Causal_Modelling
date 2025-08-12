@@ -3,8 +3,9 @@
 This project analyzes the causal effect of exercise on mental health using the 2023 Behavioral Risk Factor Surveillance System (BRFSS) dataset. The analysis employs propensity score matching and causal inference methods to estimate the treatment effect of exercise participation on mental health outcomes.
 
 ## Article 
-https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlational-world-going-beyond-rcts-ace0f0b72c6d
-https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlation-world-part-ii-measuring-how-much-and-for-whom-076009895f14
+1. https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlational-world-going-beyond-rcts-ace0f0b72c6d
+
+2. https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlation-world-part-ii-measuring-how-much-and-for-whom-076009895f14
 
 
 ## Project Overview
