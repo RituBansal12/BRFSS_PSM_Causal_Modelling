@@ -4,6 +4,8 @@ This project analyzes the causal effect of exercise on mental health using the 2
 
 ## Article 
 https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlational-world-going-beyond-rcts-ace0f0b72c6d
+https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlation-world-part-ii-measuring-how-much-and-for-whom-076009895f14
+
 
 ## Project Overview
 
@@ -235,6 +237,9 @@ matcher.run_full_analysis(caliper=0.2, ratio=1)
 - **seaborn** (≥0.11.0): Statistical visualization
 - **pyreadstat** (≥1.1.0): SAS/SPSS file reading
 - **beautifulsoup4** (≥4.11.0): HTML parsing
+- **statsmodels** (>=0.13.0): Statistical modeling and analysis
+
+
 
 ## Notes
 
