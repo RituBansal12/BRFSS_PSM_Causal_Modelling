@@ -189,10 +189,18 @@ class CausalEffectAnalyzer:
         categorical_vars = ['SEXVAR', 'MARITAL', 'EDUCA', 'RENTHOM1', 'VETERAN3',
                            'EMPLOY1', 'CHILDREN', 'INCOME3', 'PREGNANT',
                            'METRO_AREA', 'URBAN_RURAL_AREA', 'ADDEPEV3']
+        
+        self.code_mappings = {}
 
         for var in categorical_vars:
             if var in self.confounders:
-                self.df_analysis[var] = pd.Categorical(self.df_analysis[var]).codes
+                cat_series = pd.Categorical(self.df_analysis[var])
+                
+                # Replace column with codes
+                self.df_analysis[var] = cat_series.codes
+                
+                # Save mapping dictionary for later reference
+                self.code_mappings[var] = dict(enumerate(cat_series.categories))
 
         # Ensure all confounders are numeric
         for var in self.confounders:
@@ -264,10 +272,6 @@ class CausalEffectAnalyzer:
         print(f"Propensity scores and IPW weights calculated. Dataset size after dropping NaNs: {self.df.shape[0]} rows")
 
         return self
-
-    def linear_regression_analysis(self):
-        """This method is replaced by IPW analysis."""
-        pass
 
     def ipw_dose_response_analysis(self):
         """Analyze dose-response relationship between exercise minutes and mental health using IPW."""
@@ -347,11 +351,15 @@ class CausalEffectAnalyzer:
         """Analyze heterogeneous treatment effects across subgroups using IPW."""
         print("\n=== IPW Heterogeneous Effects Analysis ===")
 
-
-        # Define subgroups
+        # Define subgroups using stored code mappings
         subgroups = {
-            'Gender': self.df_analysis['SEXVAR'].map({0: 'Male', 1: 'Female'}),
-            'Income': pd.cut(self.df_analysis['INCOME3'], bins=3, labels=['Low', 'Middle', 'High']),
+            'Gender': self.df_analysis['SEXVAR'].map(self.code_mappings['SEXVAR']),
+            'Income': self.df_analysis['INCOME3'].map(self.code_mappings['INCOME3']),
+            'Education': self.df_analysis['EDUCA'].map(self.code_mappings['EDUCA']),
+            'Marital Status': self.df_analysis['MARITAL'].map(self.code_mappings['MARITAL']),
+            'Employment Status': self.df_analysis['EMPLOY1'].map(self.code_mappings['EMPLOY1']),
+            'Veteran Status': self.df_analysis['VETERAN3'].map(self.code_mappings['VETERAN3']),
+            'Urban/Rural Area': self.df_analysis['URBAN_RURAL_AREA'].map(self.code_mappings['URBAN_RURAL_AREA']),
             'Mental Health Baseline': pd.cut(
                 self.df_analysis['MENTAL_HEALTH_CONTINUOUS'],
                 bins=3, labels=['Poor', 'Fair', 'Good']

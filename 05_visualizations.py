@@ -89,8 +89,8 @@ def get_bin_midpoint(bin_str):
 
 dose_response['bin_midpoint'] = dose_response['EXERCISE_MINUTES_BINS'].apply(get_bin_midpoint)
 
-# Filter the data - Between 60 minutes and 540 minutes
-dose_response = dose_response[(dose_response['bin_midpoint'] >= 60) & (dose_response['bin_midpoint'] <= 540)]
+# Filter the data - Between 30 minutes and 500 minutes
+dose_response = dose_response[(dose_response['bin_midpoint'] >= 30) & (dose_response['bin_midpoint'] <= 500)]
 
 # Plot mean with confidence intervals
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -101,9 +101,30 @@ ax.errorbar(dose_response['bin_midpoint'], dose_response['mean'],
 ax.plot(dose_response['bin_midpoint'], dose_response['mean'], color='seagreen', linestyle='-', alpha=0.8)
 ax.set_xlabel('Exercise Minutes/week')
 ax.set_ylabel('Average Mental Health Score')
-ax.set_title('Exercise Minutes/week vs. Mental Health Score (Up to 540 minutes)')
-ax.set_xlim([0, 540])
+ax.set_title('Exercise Minutes/week vs. Mental Health Score (Up to 475 minutes)')
+ax.set_xlim([50, 475])
 plt.tight_layout()
 plt.savefig('visualizations/ipw_dose_response.png', dpi=300, bbox_inches='tight')
 plt.show()
 
+# Plot heterogeneity of treatment effect
+het_df = pd.read_csv('data/ipw_heterogeneous_effects_results.csv')
+
+het_df = het_df[het_df['subgroup'] == 'Marital Status']
+
+# Plot
+plt.figure(figsize=(10,6))
+sns.barplot(
+    data=het_df,
+    y="category", x="effect",
+    palette="Set2",
+    dodge=False
+)
+
+plt.axvline(0, color="black", linewidth=1)
+plt.title("Treatment Effect by Marital Status", fontsize=14)
+plt.xlabel("Estimated Effect")
+plt.ylabel("Category")
+plt.tight_layout()
+plt.savefig('visualizations/ipw_heterogeneous_effects.png', dpi=300, bbox_inches='tight')
+plt.show()

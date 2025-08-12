@@ -103,6 +103,7 @@ The analysis follows a systematic approach to causal inference:
   - `visualizations/SMD_balance_improvement.png`
   - `visualizations/treatment_effect.png`
   - `visualizations/ipw_dose_response.png`
+  - `visualizations/ipw_heterogeneous_effects.png`
 
 
 - **Key Features**:
@@ -126,6 +127,7 @@ The `visualizations/` directory contains:
 - `visualizations/SMD_balance_improvement.png` - Feature-level SMD improvement from Optimized PSM specifications
 - `visualizations/treatment_effect.png` - Average Treatment Effect
 - `visualizations/ipw_dose_response.png` - IPW Dose-Response Curve
+- `visualizations/ipw_heterogeneous_effects.png` - IPW Heterogeneous Effects
 
 ## Key Variables
 
