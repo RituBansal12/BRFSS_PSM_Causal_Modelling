@@ -2,13 +2,41 @@
 
 This project analyzes the causal effect of exercise on mental health using the 2023 Behavioral Risk Factor Surveillance System (BRFSS) dataset. The analysis employs propensity score matching and causal inference methods to estimate the treatment effect of exercise participation on mental health outcomes.
 
-## Article 
-1. https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlational-world-going-beyond-rcts-ace0f0b72c6d
+## Table of Contents
 
-2. https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlation-world-part-ii-measuring-how-much-and-for-whom-076009895f14
+1. [Overview](#overview)
+2. [Articles / Publications](#articles--publications)
+3. [Project Workflow](#project-workflow)
+4. [File Structure](#file-structure)
+5. [Data Directory](#data-directory)
+6. [Visualizations / Outputs](#visualizations--outputs)
+7. [Key Concepts / Variables](#key-concepts--variables)
+8. [Installation and Setup](#installation-and-setup)
+9. [Usage](#usage)
+10. [Results / Interpretation](#results--interpretation)
+11. [Technical Details](#technical-details)
+12. [Dependencies](#dependencies)
+13. [Notes / Limitations](#notes--limitations)
+14. [Contributing](#contributing)
 
+---
 
-## Project Overview
+## Overview
+
+* **Goal**: Estimate the causal effect of exercise participation on mental health using BRFSS 2023.
+* **Approach**: Data extraction and preprocessing, propensity score matching (PSM), inverse probability weighting (IPW), dose–response and heterogeneous effects analysis, and comprehensive visualization.
+* **Highlights**: Balanced matched cohorts with SMD checks; encapsulated IPW pipeline via `CausalEffectAnalyzer`; robust error handling and clear visual reporting.
+
+---
+
+## Articles / Publications
+
+* https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlational-world-going-beyond-rcts-ace0f0b72c6d
+* https://medium.com/@ritu.bansalrb00/causal-questions-in-a-correlation-world-part-ii-measuring-how-much-and-for-whom-076009895f14
+
+---
+
+## Project Workflow
 
 The analysis follows a systematic approach to causal inference:
 1. **Data Extraction**: Convert BRFSS XPT format to CSV and extract metadata
@@ -93,7 +121,7 @@ The analysis follows a systematic approach to causal inference:
   - Improved visualization handling to prevent matplotlib size errors
   - Added weighted regression analysis with proper standard errors
 
-#### `05_visualization.py`
+#### `05_visualizations.py`
 - **Purpose**: Visualizes the results for blog
 - **Input**: 
   - `data/balance_before_matching.csv`
@@ -112,7 +140,7 @@ The analysis follows a systematic approach to causal inference:
 - **Key Features**:
   - Creates Visualizations to measure the impact of PSM and specification engineering
 
-### Data Directory
+## Data Directory
 
 The `data/` directory contains:
 - **Raw Data**: `LLCP2023.XPT`, `USCODE23_LLCP_021924.HTML`
@@ -120,19 +148,19 @@ The `data/` directory contains:
 - **Analysis Results**: Various CSV files with matching results, balance metrics, and treatment effects
 - **Metadata**: `LLCP2023_metadata.csv`
 
-### Visualizations Directory
+## Visualizations / Outputs
 
 The `visualizations/` directory contains:
 - `psm_analysis_results.png` - Propensity score matching visualizations
 - `enhanced_psm_specification_comparison.png` - PSM specification testing results
-- `causal_analysis_results.png` - Causal effect analysis plots
+- `causal_analysis_results_ipw.png` - Causal effect analysis plots
 - `visualizations/overall_balance_improvement.png` - Overall balance improvement from optimized PSM specification
 - `visualizations/SMD_balance_improvement.png` - Feature-level SMD improvement from Optimized PSM specifications
 - `visualizations/treatment_effect.png` - Average Treatment Effect
 - `visualizations/ipw_dose_response.png` - IPW Dose-Response Curve
 - `visualizations/ipw_heterogeneous_effects.png` - IPW Heterogeneous Effects
 
-## Key Variables
+## Key Concepts / Variables
 
 ### Treatment Variable
 - **Exercise Participation**: Binary indicator based on strength training, aerobic exercise, or other physical activities
@@ -154,7 +182,7 @@ The `visualizations/` directory contains:
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd counterfactual_modeling_BRFSS
+   cd BRFSS_PSM_Causal_Modelling
    ```
 
 2. **Install dependencies**:
@@ -189,19 +217,20 @@ python 03_propensity_score_matching.py
 python 04_causal_model_fitting.py
 
 # 5. Visualize results
-python 05_visualization.py
+python 05_visualizations.py
 ```
 
-### Individual Components
+### Run Individual Components
 
-Each script can be run independently if the required input files are available:
+Each step can be executed independently if the required input files are available:
 
-```python
-# Example: Run PSM analysis
-from propensity_score_matching import PropensityScoreMatcher
-
-matcher = PropensityScoreMatcher()
-matcher.run_full_analysis(caliper=0.2, ratio=1)
+```bash
+python 01_data_extraction.py
+python 02_data_preprocessing.py
+python 03a_psm_specification_testing.py
+python 03_propensity_score_matching.py
+python 04_causal_model_fitting.py
+python 05_visualizations.py
 ```
 
 ## Results Interpretation
@@ -230,6 +259,7 @@ matcher.run_full_analysis(caliper=0.2, ratio=1)
 - **Subgroup Analysis**: Heterogeneous treatment effects
 
 ## Dependencies
+- See `requirements.txt` for the complete, versioned list.
 
 - **pandas** (≥1.5.0): Data manipulation and analysis
 - **numpy** (≥1.21.0): Numerical computing
@@ -242,10 +272,15 @@ matcher.run_full_analysis(caliper=0.2, ratio=1)
 
 
 
-## Notes
+## Notes / Limitations
 
 - The analysis uses the 2023 BRFSS dataset, which is publicly available from the CDC
 - All results are based on observational data and should be interpreted with appropriate caution
 - The propensity score matching approach helps reduce confounding but cannot eliminate all bias
 - Results may not be generalizable to populations not represented in the BRFSS sample
 - The data/ directory has been removed from the repository. Download the raw files(`LLCP2023.XPT`, `USCODE23_LLCP_021924.HTML`) from https://www.cdc.gov/brfss/annual_data/annual_2023.html and place it under data/ directory to run the code.
+
+## Contributing
+
+Contributions are welcome! Please open an issue to discuss changes or submit a PR with a clear description and minimal, well-scoped commits. Ensure code is linted and documented.
+
