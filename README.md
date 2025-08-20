@@ -233,7 +233,7 @@ python 04_causal_model_fitting.py
 python 05_visualizations.py
 ```
 
-## Results Interpretation
+## Results / Interpretation
 
 ### Propensity Score Matching
 - **Balance Assessment**: Standardized mean differences (SMD) < 0.1 indicate good balance
